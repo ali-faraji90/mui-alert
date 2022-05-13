@@ -16,7 +16,7 @@ export const Main = MainTemplate.bind({})
 Main.args = {
     open: true,
     title: "Test",
-    message: "This is a test message."
+    message: <em>This is a test message.</em>
 }
 
 
