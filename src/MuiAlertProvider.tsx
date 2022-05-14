@@ -1,6 +1,6 @@
 import { Portal } from '@mui/material'
 import { useMemo } from '@storybook/addons'
-import React, { createContext, ReactNode, ReactElement, useState, useCallback } from 'react'
+import React, { createContext, ReactElement, ReactNode, useCallback, useState } from 'react'
 import { Alert } from './components'
 import { AlertAction, AlertProps } from './components/Alert/Alert'
 import { generateId } from './utils'
@@ -43,7 +43,7 @@ function MuiAlertProvider({ children }: MuiAlertProviderProps) {
     )
 
     const showAlert = useCallback(
-        (message: ReactNode, title?: string, actions: AlertAction[] = [], configs?: Omit<AlertProps, "message" | "title" | "actions"> = { open: true }) => {
+        (message: ReactNode, title?: string, actions: AlertAction[] = [], configs: Omit<AlertProps, "message" | "title" | "actions"> = { open: true }) => {
             const props: AlertProps = {
                 ...configs,
                 message,
