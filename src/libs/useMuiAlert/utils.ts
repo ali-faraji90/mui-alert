@@ -4,10 +4,10 @@ import { SimplifiedAlertAction } from "./useMuiAlert";
 export function processActions(id: string, actions: SimplifiedAlertAction[], hideAlert: (id: string) => void): AlertAction[] {
     if (actions.length > 0) {
         return actions.map(
-            (action) => ({
-                ...action,
+            ({ action, ...restProps }) => ({
+                ...restProps,
                 onClick: () => {
-                    if (action.action() !== false) {
+                    if (action() !== false) {
                         hideAlert(id)
                     }
                 }
