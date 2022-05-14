@@ -1,6 +1,6 @@
 {
   "name": "@ali-faraji90/mui-alert",
-  "version": "0.0.3",
+  "version": "0.0.5",
   "description": "Easily show @mui alerts with a simple function.",
   "repository": "github:ali-faraji90/mui-alert.git",
   "author": "Ali Faraji <ali.faraji90@gmail.com>",
