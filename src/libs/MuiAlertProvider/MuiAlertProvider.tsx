@@ -26,23 +26,27 @@ function generateId() {
 function MuiAlertProvider({ children }: MuiAlertProviderProps) {
     const [alerts, setAlerts] = useState<AlertObjectProps[]>([])
 
+    const cleanUp = useCallback(
+        () => setAlerts(alerts => alerts.filter(a => a.props.open)),
+        []
+    )
+
     const hideAlert = useCallback(
         (id: string) => {
             setAlerts(
                 alerts => {
                     const index = alerts.findIndex(ao => ao.id === id)
                     if (index > -1) {
-                        const newAlerts = alerts.filter(
-                            alert => alert.props.open
-                        )
+                        const newAlerts = [...alerts]
                         newAlerts[index].props.open = false
+                        newAlerts[index].props.onTransitionEnd = cleanUp
                         return newAlerts
                     }
                     return alerts
                 }
             )
         },
-        []
+        [cleanUp]
     )
 
     const showAlert = useCallback(
