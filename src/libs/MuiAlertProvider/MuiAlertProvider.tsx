@@ -1,9 +1,9 @@
 import { Portal } from '@mui/material'
 import { useMemo } from '@storybook/addons'
 import React, { createContext, ReactElement, ReactNode, useCallback, useState } from 'react'
-import { Alert } from './components'
-import { AlertAction, AlertProps } from './components/Alert/Alert'
-import { generateId } from './utils'
+import { Alert } from '..'
+import { AlertAction, AlertProps } from '../Alert/Alert'
+import { generateId } from '../../utils'
 
 interface MuiAlertContextValue {
     showAlert: (message: ReactNode, title?: string, actions?: AlertAction[], configs?: Omit<AlertProps, "message" | "title" | "actions">) => string,
