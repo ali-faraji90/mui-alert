@@ -39,14 +39,15 @@ function MuiAlertProvider({ children }: MuiAlertProviderProps) {
                     if (index > -1) {
                         const newAlerts = [...alerts]
                         newAlerts[index].props.open = false
-                        newAlerts[index].props.onTransitionEnd = cleanUp
                         return newAlerts
+                    } else {
+                        console.warn(`The alert id is invalid (${id}).`)
                     }
                     return alerts
                 }
             )
         },
-        [cleanUp]
+        []
     )
 
     const showAlert = useCallback(
@@ -56,6 +57,13 @@ function MuiAlertProvider({ children }: MuiAlertProviderProps) {
                 open: true,
                 message,
                 title,
+                TransitionProps: {
+                    ...configs.TransitionProps,
+                    onExited: (node) => {
+                        configs.TransitionProps?.onExited?.(node)
+                        cleanUp()
+                    }
+                },
                 actions: actions ?? [],
             }
             setAlerts(
@@ -69,7 +77,7 @@ function MuiAlertProvider({ children }: MuiAlertProviderProps) {
             )
             return id
         },
-        []
+        [cleanUp]
     )
 
     const contextValue: MuiAlertContextValue = useMemo(
