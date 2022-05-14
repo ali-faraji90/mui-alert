@@ -3,10 +3,10 @@ import { useMemo } from '@storybook/addons'
 import React, { createContext, ReactElement, ReactNode, useCallback, useState } from 'react'
 import { Alert } from '..'
 import { AlertAction, AlertProps } from '../Alert/Alert'
-import { generateId } from '../../utils'
 
 interface MuiAlertContextValue {
-    showAlert: (message: ReactNode, title?: string, actions?: AlertAction[], configs?: Omit<AlertProps, "message" | "title" | "actions">) => string,
+    generateId: () => string,
+    showAlert: (id: string, message: ReactNode, title?: string, actions?: AlertAction[], configs?: Omit<AlertProps, "message" | "title" | "actions">) => string,
     hideAlert: (id: string) => void,
 }
 
@@ -21,6 +21,9 @@ interface AlertObjectProps {
 
 export const MuiAlertContext = createContext<null | MuiAlertContextValue>(null)
 
+function generateId() {
+    return (Math.random() + 1).toString(36).substring(2)
+}
 
 function MuiAlertProvider({ children }: MuiAlertProviderProps) {
     const [alerts, setAlerts] = useState<AlertObjectProps[]>([])
@@ -43,14 +46,13 @@ function MuiAlertProvider({ children }: MuiAlertProviderProps) {
     )
 
     const showAlert = useCallback(
-        (message: ReactNode, title?: string, actions: AlertAction[] = [], configs: Omit<AlertProps, "message" | "title" | "actions"> = { open: true }) => {
+        (id:string, message: ReactNode, title?: string, actions: AlertAction[] = [], configs: Omit<AlertProps, "message" | "title" | "actions"> = { open: true }) => {
             const props: AlertProps = {
                 ...configs,
                 message,
                 title,
                 actions: actions ?? [],
             }
-            const id = generateId()
             setAlerts(
                 alerts => [
                     ...alerts,
@@ -67,6 +69,7 @@ function MuiAlertProvider({ children }: MuiAlertProviderProps) {
 
     const contextValue: MuiAlertContextValue = useMemo(
         () => ({
+            generateId,
             showAlert,
             hideAlert,
         }),
