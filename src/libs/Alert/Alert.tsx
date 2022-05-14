@@ -11,7 +11,7 @@ export interface AlertProps extends DialogProps {
     actions: AlertAction[]
 }
 
-function Alert({ title, message, actions = [{ label: "OK" }], ...dialogProps }: AlertProps) {
+function Alert({ title, message, actions, ...dialogProps }: AlertProps) {
     return (
         <Dialog {...dialogProps}>
             {title && <DialogTitle>{title}</DialogTitle>}

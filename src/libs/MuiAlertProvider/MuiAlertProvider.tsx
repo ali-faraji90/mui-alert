@@ -32,7 +32,9 @@ function MuiAlertProvider({ children }: MuiAlertProviderProps) {
                 alerts => {
                     const index = alerts.findIndex(ao => ao.id === id)
                     if (index > -1) {
-                        const newAlerts = [...alerts]
+                        const newAlerts = alerts.filter(
+                            alert => alert.props.open
+                        )
                         newAlerts[index].props.open = false
                         return newAlerts
                     }
@@ -44,9 +46,10 @@ function MuiAlertProvider({ children }: MuiAlertProviderProps) {
     )
 
     const showAlert = useCallback(
-        (id: string, message: ReactNode, title?: string, actions: AlertAction[] = [], configs: Omit<AlertProps, "message" | "title" | "actions"> = { open: true }) => {
+        (id: string, message: ReactNode, title?: string, actions: AlertAction[] = [], configs: Omit<AlertProps, "open" | "message" | "title" | "actions"> = { }) => {
             const props: AlertProps = {
                 ...configs,
+                open: true,
                 message,
                 title,
                 actions: actions ?? [],

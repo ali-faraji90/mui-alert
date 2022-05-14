@@ -16,8 +16,6 @@ export function processActions(id: string, actions: SimplifiedAlertAction[], hid
     }
     return [{
         label: "OK",
-        onClick: () => {
-            hideAlert(id)
-        }
+        onClick: () => hideAlert(id)
     }]
 }
