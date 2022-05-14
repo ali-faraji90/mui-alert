@@ -1,10 +1,14 @@
 import { Button, ButtonProps, Dialog, DialogActions, DialogContent, DialogContentText, DialogProps, DialogTitle } from '@mui/material'
 import React, { ReactNode } from 'react'
 
+export interface AlertAction extends Omit<ButtonProps, "children"> {
+    label: string
+}
+
 export interface AlertProps extends DialogProps {
     title?: string,
     message: ReactNode | ReactNode[],
-    actions: (Omit<ButtonProps, "children"> & { label: string })[]
+    actions: AlertAction[]
 }
 
 function Alert({ title, message, actions = [{ label: "OK" }], ...dialogProps }: AlertProps) {
